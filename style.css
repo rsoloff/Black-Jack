@@ -2,21 +2,34 @@ body {
   background-color: #006600;
 }
 
-* img {
-  /*width: 75.7969px;
-  height: 100px;
-  position: absolute;*/
-  width: 10%;
-  height: 10%;
+img {
   position: relative;
 }
 
-#"Facedown Card" {
+/*#Facedown-Card {
   width: 75.7969px;
   height: 100px;
-}
+  position: relative;
+}*/
+
+/*#Bankroll {
+  width: 50px;
+  height: 100px
+  display: inline;
+  bottom: 30px;
+  position: absolute;
+  box-sizing: border-box;
+  margin: 0 auto;
+  border: 5px solid black;
+}*/
 
 h1 {
+  color: white;
+  position: relative;
+  text-align: right;
+}
+
+h2 {
   color: white;
   text-align: right;
 }
@@ -24,5 +37,30 @@ h1 {
 p {
   color: white;
   font-size: 25px;
+  position: relative;
   text-align: right;
+}
+
+#Player-Hand {
+  width: 700px;
+  height: 200px;
+  position: absolute;
+  display: block;
+  bottom: 30px;
+  box-sizing: border-box;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+}
+
+#Dealer-Hand {
+  width: 700px;
+  height: 200px;
+  position: absolute;
+  display: block;
+  top: 30px;
+  box-sizing: border-box;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
 }
