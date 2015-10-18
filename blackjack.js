@@ -70,6 +70,8 @@ var hiddenDealerSum;
 var winner;
 var playerMove = 75;
 var dealerMove = 75;
+var facedownDisplay;
+var fourthCardDisplay;
 
 /* The player and dealer are dealt two cards, first and third for player, second and fourth for dealer. Cards are removed from deck. Cards are moved to divs on top and bottom of screen (top dealer, bottom player) and second card is slightly to the right, but overlapping first card. Second dealer card is hiddenAdds value of card to respective sum.*/
 var initialDeal = function() {
@@ -123,11 +125,12 @@ var initialDeal = function() {
   $("#Dealers-Sum > p").text(hiddenDealerSum + "+");
   console.log(dealerSum);
   var facedown = $("#Facedown-Card");
-  var facedownDisplay = facedown.clone();
+  facedownDisplay = facedown.clone();
   facedownDisplay.appendTo("#Dealer-Hand");
   facedownDisplay.css("display", "inline-block");
   facedownDisplay.css("height", "100%");
   facedownDisplay.css("left", dealerMove -= 40);
+  fourthCardDisplay = fourthCard.clone();
   console.log(playerSum);
   console.log(dealerSum);
   // If both players get 21, it's a tie blackjack and automatically ends. There is no need to run the CheckBlackjack function for this.
@@ -136,7 +139,6 @@ var initialDeal = function() {
       $("#Dealers-Sum > p").text(dealerSum);
       facedownDisplay.hide();
       facedownDisplay.remove();
-      var fourthCardDisplay = fourthCard.clone();
       fourthCardDisplay.appendTo("#Dealer-Hand");
       fourthCardDisplay.css("display", "inline-block");
       fourthCardDisplay.css("height", "100%");
@@ -150,7 +152,7 @@ var initialDeal = function() {
   if (checkBlackjack(playerSum, "Player") || checkBlackjack(dealerSum, "Dealer")) {
     facedownDisplay.hide();
     facedownDisplay.remove();
-    var fourthCardDisplay = fourthCard.clone();
+    fourthCardDisplay = fourthCard.clone();
     fourthCardDisplay.appendTo("#Dealer-Hand");
     fourthCardDisplay.css("display", "inline-block");
     fourthCardDisplay.css("height", "100%");
@@ -239,6 +241,12 @@ var checkBust = function(sum, loser, victor) {
   if (sum >= 21) {
     winner = victor;
     $("#Dealers-Sum > p").text(dealerSum);
+    facedownDisplay.hide();
+    facedownDisplay.remove();
+    fourthCardDisplay.appendTo("#Dealer-Hand");
+    fourthCardDisplay.css("display", "inline-block");
+    fourthCardDisplay.css("height", "100%");
+    fourthCardDisplay.css("left", 35);
     alert(loser + " has busted!");
     return true;
   }
@@ -246,6 +254,12 @@ var checkBust = function(sum, loser, victor) {
 
 // Compares both sums and assigns to winner variable. Also checks for tie.
 var checkWin = function() {
+  facedownDisplay.hide();
+  facedownDisplay.remove();
+  fourthCardDisplay.appendTo("#Dealer-Hand");
+  fourthCardDisplay.css("display", "inline-block");
+  fourthCardDisplay.css("height", "100%");
+  fourthCardDisplay.css("left", 35);
   if (playerSum > dealerSum) {
     winner = "Player";
   } else if (playerSum < dealerSum) {
@@ -297,6 +311,7 @@ var playAgain = function() {
     setTimeout(placeBet, 1000);
 }
 
+//When pressed runs playAgain but also resets bankroll.
 var gameOver = function() {
   $("#Player-Hand").empty();
   $("#Dealer-Hand").empty();
