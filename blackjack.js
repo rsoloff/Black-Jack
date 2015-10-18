@@ -4,6 +4,7 @@ $(function () {
   $("img").hide();
   makeDeck();
   startGame();
+  $("#Game-Over-Button").click(gameOver);
 });
 
 
@@ -25,8 +26,11 @@ var startGame = function() {
   playersBankroll = 100;
   $("#Bankroll > p").text(playersBankroll);
   currentBet = 0;
+  $("#Bet > p").text(currentBet);
   playerSum = 0;
+  $("#Your-Sum > p").text(playerSum);
   dealerSum = 0;
+  $("#Dealers-Sum > p").text(dealerSum);
   placeBet();
 }
 
@@ -151,7 +155,7 @@ var initialDeal = function() {
     fourthCardDisplay.css("display", "inline-block");
     fourthCardDisplay.css("height", "100%");
     fourthCardDisplay.css("left", 35);
-    declareWinner();
+    setTimeout(declareWinner, 1000);
   } else {
     setTimeout(playerHit, 1000);
   }
@@ -166,7 +170,7 @@ var checkAces = function(card, sum) {
 };
 
 //Will check playerSum then dealerSum, if they win, victor argument puts winner variable equal to who won.
-checkBlackjack = function(sum, victor) {
+var checkBlackjack = function(sum, victor) {
   if (sum === 21) {
     winner = victor;
     return true;
@@ -291,4 +295,16 @@ var playAgain = function() {
     dealerMove = 75;
     makeDeck();
     setTimeout(placeBet, 1000);
+}
+
+var gameOver = function() {
+  $("#Player-Hand").empty();
+  $("#Dealer-Hand").empty();
+  playDeck = [2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 0, 0, 0, 0];
+  winner = undefined;
+  hiddenDealerSum = 0;
+  makeDeck();
+  startGame();
+  playerMove = 75;
+  dealerMove = 75;
 }
