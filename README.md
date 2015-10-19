@@ -1,3 +1,27 @@
+# Wireframe
+* Deck made of 52 card array
+* Each number is an array of four, one for each suit with index number to decide image for suit
+* Game starts with no cards and default bankroll
+* Player’s bankroll = number (100)
+* Prompt number bet, subtract from bankroll value and display in bet
+* Shuffle deck, take highest in array, pop it and put its value into player’s hand
+* Take next highest and give it to dealer, then to player and dealer again
+* Should place image corresponding to card in places designated (bottom of screen for player, top for dealer, then next card is to the right) first dealer card gets value given but facedown card image is shown
+* Each player has a sum taken from the two values
+* For Aces, if sum is 10 or lower add 11, if 11 or higher add 1
+* Prompt for another card, if yes take another card from array, place it in next spot, add it’s value to sum and prompt again, if no dealer tries hit
+* If dealer sum is 16 or lower he must hit, if 17 or higher, he cannot hit
+* After both values are done, compare
+* If either number is over 21 they lose
+* For 21 or under, whoever has the highest number wins, if they have the same it is a tie
+* Display who wins
+* If player wins double bet and add it to bankroll, if player ties return bet to bankroll, if player loses return bet to 0
+* After game hide all images, reset deck array, shuffle deck and start over
+* If player’s bankroll is 0 at start of round the game ends
+
+# My Approach
+For the javascript, I programmed the game from beginning to end in order of events. It worked well because each function led to another one. First I got the shuffling and deck creation to work, then made betting possible before the game itself. I then needed to add the HTML for the cards so I could use Jquery on them. After that the game progressed from one stage to another with straightforward checks and tests to reach the end. I ended up spending a lot of time with the CSS in the middle of this though.
+
 # Black-Jack
 * window.onload
 Hides all the card images, runs makeDeck, startGame and sets gameOver click event.
@@ -99,3 +123,9 @@ Div centered at the top of screen. Card images are cloned in here to display dea
 Div in center of screen. Has a click event for gameOver function.
 * #Game-Over-Button > p
 Changes text color of just this paragraph to black.
+
+# Unsolved Problems
+* I was never able to figure out why the alert for the player not putting a number into the bet prompt wouldn't activate. I checked the console and it was getting NaN, but that did not set off the alert like it was supposed to.
+* I wanted to add buttons for the hit or stand prompts, but I was unsure of how to make the click events turn off if the buttons were hidden until the player is allowed to hit. I ran out of time before I could solve this.
+* I was working on the insurance betting and thought I had it set up properly, acting almost exactly like the original bet, but for some reason running it would stop everything else from working and I was unable to spare the time to fix the problem, so I removed it.
+* I wanted to make the presentation less ugly, at the very least by positioning the text better. However, I am terrible at CSS and so I did the little I could, which already took way too much time.
