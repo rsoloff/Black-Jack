@@ -22,10 +22,10 @@ p {
   right: 75px
 }
 
-#Your-Sum {
+#Bankroll {
   text-align: right;
   position: relative;
-  top: 120px;
+  top: 90px;
   right: 75px
 }
 
@@ -36,10 +36,10 @@ p {
   right: 75px
 }
 
-#Bankroll {
+#Your-Sum {
   text-align: right;
   position: relative;
-  top: 90px;
+  top: 120px;
   right: 75px
 }
 

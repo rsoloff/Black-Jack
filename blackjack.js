@@ -1,5 +1,3 @@
-console.log("hi");
-
 $(function () {
   $("img").hide();
   makeDeck();
@@ -20,6 +18,14 @@ var makeDeck = function() {
 
 var playersBankroll = 100;
 var currentBet = 0;
+var playerSum;
+var dealerSum;
+var hiddenDealerSum;
+var winner;
+var playerMove = 75;
+var dealerMove = 75;
+var facedownDisplay;
+var fourthCardDisplay;
 
 //Function starts the game on reload, resets bankroll and bet, and runs placeBet;
 var startGame = function() {
@@ -64,20 +70,9 @@ function shuffle(o) {
   return o;
 };
 
-var playerSum;
-var dealerSum;
-var hiddenDealerSum;
-var winner;
-var playerMove = 75;
-var dealerMove = 75;
-var facedownDisplay;
-var fourthCardDisplay;
-
 /* The player and dealer are dealt two cards, first and third for player, second and fourth for dealer. Cards are removed from deck. Cards are moved to divs on top and bottom of screen (top dealer, bottom player) and second card is slightly to the right, but overlapping first card. Second dealer card is hiddenAdds value of card to respective sum.*/
 var initialDeal = function() {
-  console.log("initialDeal run");
   var firstCard = playDeck.pop();
-  console.log(firstCard);
   if (firstCard.data("id") == 0) {
     var aceValue = checkAces(firstCard, playerSum);
     playerSum += aceValue;
@@ -89,7 +84,6 @@ var initialDeal = function() {
   firstCardDisplay.css("height", "100%");
   firstCardDisplay.css("left", playerMove);
   var secondCard = playDeck.pop();
-  console.log(secondCard);
   if (secondCard.data("id") == 0) {
     var aceValue = checkAces(secondCard, dealerSum);
     dealerSum += aceValue;
@@ -102,28 +96,24 @@ var initialDeal = function() {
   secondCardDisplay.css("height", "100%");
   secondCardDisplay.css("left", dealerMove);
   var thirdCard = playDeck.pop();
-  console.log(thirdCard);
   if (thirdCard.data("id") == 0) {
     var aceValue = checkAces(thirdCard, playerSum);
     playerSum += aceValue;
   };
   playerSum += thirdCard.data("id");
   $("#Your-Sum > p").text(playerSum);
-  console.log(playerSum);
   var thirdCardDisplay = thirdCard.clone();
   thirdCardDisplay.appendTo("#Player-Hand");
   thirdCardDisplay.css("display", "inline-block");
   thirdCardDisplay.css("height", "100%");
   thirdCardDisplay.css("left", playerMove -= 40);
   var fourthCard = playDeck.pop();
-  console.log(fourthCard);
   if (fourthCard.data("id") == 0) {
     var aceValue = checkAces(fourthCard, dealerSum);
     dealerSum += aceValue;
   };
   dealerSum += fourthCard.data("id");
   $("#Dealers-Sum > p").text(hiddenDealerSum + "+");
-  console.log(dealerSum);
   var facedown = $("#Facedown-Card");
   facedownDisplay = facedown.clone();
   facedownDisplay.appendTo("#Dealer-Hand");
@@ -131,8 +121,6 @@ var initialDeal = function() {
   facedownDisplay.css("height", "100%");
   facedownDisplay.css("left", dealerMove -= 40);
   fourthCardDisplay = fourthCard.clone();
-  console.log(playerSum);
-  console.log(dealerSum);
   // If both players get 21, it's a tie blackjack and automatically ends. There is no need to run the CheckBlackjack function for this.
   var blackjackTie = function () {
     if (playerSum === 21 && dealerSum === 21) {
@@ -150,6 +138,7 @@ var initialDeal = function() {
   setTimeout(blackjackTie, 1000);
   //Short-circuit evaluation, if the player doesn't win, check dealer.
   if (checkBlackjack(playerSum, "Player") || checkBlackjack(dealerSum, "Dealer")) {
+    $("#Dealers-Sum > p").text(dealerSum);
     facedownDisplay.hide();
     facedownDisplay.remove();
     fourthCardDisplay = fourthCard.clone();
@@ -184,7 +173,6 @@ var playerHit = function() {
   var hitOrStand = prompt("Would you like to hit or to stand?")
   if (hitOrStand === "hit") {
     var hitCard = playDeck.pop();
-    console.log(hitCard);
     if (hitCard.data("id") == 0) {
       var aceValue = checkAces(hitCard, playerSum);
       playerSum += aceValue;
@@ -196,7 +184,6 @@ var playerHit = function() {
     hitCardDisplay.css("display", "inline-block");
     hitCardDisplay.css("height", "100%");
     hitCardDisplay.css("left", playerMove -= 40);
-    console.log(playerSum);
     // See if hit made player bust.
     if (checkBust(playerSum, "Player", "Dealer")) {
       setTimeout(declareWinner, 1000);
@@ -211,7 +198,6 @@ var playerHit = function() {
 var dealerHit = function() {
   if (dealerSum < 17) {
     var hitCard = playDeck.pop();
-    console.log(hitCard);
     if (hitCard.data("id") == 0) {
       var aceValue = checkAces(hitCard, playerSum);
       dealerSum += aceValue;
@@ -224,7 +210,6 @@ var dealerHit = function() {
     hitCardDisplay.css("display", "inline-block");
     hitCardDisplay.css("height", "100%");
     hitCardDisplay.css("left", dealerMove -= 40);
-    console.log(dealerSum);
     if (checkBust(dealerSum, "Dealer", "Player")) {
       setTimeout(declareWinner, 1000);
     } else {
@@ -238,7 +223,7 @@ var dealerHit = function() {
 /* Looks at sum after every hit. Takes hitter's sum and name as well as opponent name as parameters.
 Tells who lost and changes winner variable to opponent.*/
 var checkBust = function(sum, loser, victor) {
-  if (sum >= 21) {
+  if (sum > 21) {
     winner = victor;
     $("#Dealers-Sum > p").text(dealerSum);
     facedownDisplay.hide();
